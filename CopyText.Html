@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        /* Your CSS styles here */
+        #gallery-container {
+            /* ... (your existing styles) ... */
+        }
+
+        /* Individual gallery items (responses) */
+        .gallery-item {
+            /* ... (your existing styles) ... */
+        }
+
+        .fullscreen-div {
+            /* ... (your existing styles) ... */
+        }
+
+        #question {
+            /* ... (your existing styles) ... */
+        }
+
+        #submitButton {
+            /* ... (your existing styles) ... */
+        }
+
+        .question-answer-pair-div {
+            /* ... (your existing styles) ... */
+        }
+
+        .question-div {
+            /* ... (your existing styles) ... */
+        }
+
+        .answer-div {
+            /* ... (your existing styles) ... */
+        }
+
+        #scroller-div {
+            /* ... (your existing styles) ... */
+        }
+
+        #iconSend {
+            /* ... (your existing styles) ... */
+        }
+
+        .grid-container {
+            /* ... (your existing styles) ... */
+        }
+
+        .grid-item {
+            /* ... (your existing styles) ... */
+        }
+
+        .copy-button {
+            background-color: #19c37d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fullscreen-div">
+        <div id="gallery-container">
+            <div id="scroller-div">
+                <!-- Response items will be displayed here -->
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <form id="requestForm" class="grid-item" style="width: 100%;">
+                <input type="text" id="question" name="question" placeholder="Type your question" required class="">
+                <br>
+                <button type="submit" id="submitButton">
+                    <!-- Your send button content here -->
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ... (your existing JavaScript code) ...
+
+
+        
+        // Function to copy text inside answer-div
+        function copyAnswerText(answerId) {
+            const answerDiv = document.getElementById(answerId);
+            const answerText = answerDiv.textContent;
+
+            // Create a temporary textarea to copy the text
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = answerText;
+
+            // Append the textarea to the body
+            document.body.appendChild(tempTextarea);
+
+            // Select and copy the text
+            tempTextarea.select();
+            document.execCommand('copy');
+
+            // Remove the temporary textarea
+            document.body.removeChild(tempTextarea);
+        }
+
+        // Create a unique ID for each "answer-div"
+        function generateUniqueId() {
+            return 'answer' + (new Date().getTime());
+        }
+
+        // Function to add "answer-div" with a copy button
+        function addAnswerDiv(answerText) {
+            const scrollerDiv = document.getElementById('scroller-div');
+
+            // Generate a unique ID for this "answer-div"
+            const answerId = generateUniqueId();
+
+            // Create the answer div with the unique ID
+            const answerDiv = document.createElement('div');
+            answerDiv.id = answerId;
+            answerDiv.classList.add('answer-div');
+            answerDiv.textContent = answerText;
+
+            // Create the copy button
+            const copyButton = document.createElement('button');
+            copyButton.textContent = 'Copy';
+            copyButton.classList.add('copy-button');
+
+            // Add an event listener to the copy button
+            copyButton.addEventListener('click', function () {
+                copyAnswerText(answerId);
+            });
+
+            // Append the answer and copy button to the scroller div
+            scrollerDiv.appendChild(answerDiv);
+            answerDiv.appendChild(copyButton);
+        }
+    </script>
+</body>
+
+</html>

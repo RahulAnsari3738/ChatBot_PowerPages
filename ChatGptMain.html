@@ -3,8 +3,6 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <style>
         /* Your CSS styles here */
         #gallery-container {
@@ -41,8 +39,6 @@
                     rgba(12, 16, 25, 1) 100%)
         }
 
-
-
         #question {
             position: absolute;
             bottom: 4%;
@@ -53,9 +49,8 @@
             height: 65px;
             border-style: none;
             padding-right: 7%;
-           
-        }
 
+        }
 
         #submitButton {
             position: absolute;
@@ -78,24 +73,41 @@
 
         .question-answer-pair-div {
             padding: 10px;
-            margin: 20px;
+            margin: 10px;
         }
 
         .question-div {
-            padding: 5px;
-            margin: 5px;
+            padding: 1px;
+            margin: 1px;
             text-align: justify;
             color: white;
         }
 
         .answer-div {
             padding: 5px;
-            margin: 10px;
+            margin: 1px;
             color: white;
-            background-color: #2C3C61;
+
             text-align: justify;
             border-radius: 8px;
             padding: 20px;
+        }
+
+        .button-div {
+
+            margin-top: 25px;
+            max-height: 20px;
+
+        }
+
+        .answer-container-div {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            background-color: #2C3C61;
+            padding: 0px 15px 0px 0px;
+            margin-top: 8px;
+            border-radius: 10px;
+
         }
 
         #scroller-div {
@@ -108,16 +120,12 @@
             /*border: 1px solid #ccc; /* Optional: Add a border for better visibility */
         }
 
-
         #iconSend {
             width: 18px;
             height: 18px;
             color: gray;
             margin-top: 1px;
-
-
         }
-
 
         .grid-container {
             display: grid;
@@ -130,9 +138,6 @@
             position: absolute;
             bottom: 4%;
         }
-
-
-
     </style>
 </head>
 
@@ -196,38 +201,33 @@
             }
         }
 
-
-
         // Check input on page load
         window.onload = function () {
             updateButtonBackground();
         };
 
 
-
-
-
-
         let questionNumber = 0; // to make unique id of div 
+
         // Attach the generatedGuid to the query parameter
         const scrollerDiv = document.getElementById('scroller-div');
 
         document.getElementById('requestForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
-            var QuestionInput = "";
+            //var QuestionInput = "";
             const question = document.getElementById('question').value;
             questionNumber++;
 
             const scrolleriv = document.getElementById('scroller-div');
 
 
-
+            // Generate unique id for Question&Answer
             var questionAnswerPairDiv = document.createElement("div");
             questionAnswerPairDiv.id = "questionAnswerPairDiv" + questionNumber;
             questionAnswerPairDiv.classList.add("question-answer-pair-div");
 
-
+            // Generate unique id for question 
             var questionDiv = document.createElement("div");
             questionDiv.id = "user-query" + questionNumber;
             questionDiv.classList.add("question-div");
@@ -235,16 +235,38 @@
             questionAnswerPairDiv.appendChild(questionDiv);
 
 
-            var ansnDiv = document.createElement("div");
-            ansnDiv.id = "answer" + questionNumber;
-            ansnDiv.classList.add("answer-div");
-            ansnDiv.innerHTML = "loading..."
+            // Generate unique id for ans
+            var ansnDivContainer = document.createElement("div");
+            ansnDivContainer.id = "answerDivContainer" + questionNumber;
+
+            ansnDivContainer.classList.add("answer-container-div");
+            // ansnDivContainer.innerHTML = "loading..."
+            questionAnswerPairDiv.appendChild(ansnDivContainer);
 
 
-            questionAnswerPairDiv.appendChild(ansnDiv);
+
+            // Generate unique id for ans
+            var ansnDivPara = document.createElement("p");
+            ansnDivPara.id = "answer" + questionNumber;
+            ansnDivPara.classList.add("answer-div");
+            ansnDivPara.innerHTML = "loading..."
+            ansnDivContainer.appendChild(ansnDivPara);
+
+
+            // Generate unique id for Button
+            var buttonDiv = document.createElement("button");
+            buttonDiv.id = "buttonDiv" + questionNumber;
+            buttonDiv.classList.add("button-div");
+            ansnDivContainer.appendChild(buttonDiv);
+            // buttonDiv.onclick("")
+
+            buttonDiv.style.float = "right";
+
+            //ansnDivPara.classList.add("grid-container");
 
 
 
+            // applay scrolling 
             scrolleriv.appendChild(questionAnswerPairDiv);
             var scrollercontainer = document.getElementById("scroller-div");
             scrollercontainer.scroll(0, scrollercontainer.scrollHeight);
@@ -259,138 +281,108 @@
 
 
 
-            const url = `https://OrganizationalChatbot.azurewebsites.net/question?input=${encodeURIComponent(question)}&cid=${encodeURIComponent(generatedGuid)}`;
+            // const url = `https://OrganizationalChatbot.azurewebsites.net/question?input=${encodeURIComponent(question)}&cid=${encodeURIComponent(generatedGuid)}`;
 
-            // Create the fetch request with the options object
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Subscription-Key': 'Pdkv9VH9CkCVhm4GGxP5Lw==',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    // Add the response to the list
+            // // Create the fetch request with the options object
+            // fetch(url, {
+            //     method: 'GET',
+            //     headers: {
+            //         'Subscription-Key': 'Pdkv9VH9CkCVhm4GGxP5Lw==',
+            //         'Content-Type': 'application/json'
+            //     }
+            // })
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error(`HTTP error! Status: ${response.status}`);
+            //         }
+            //         return response.text();
+            //     })
+            //     .then(data => {
+            //         // Add the response to the list
+            //         let res = JSON.parse(data);
+            //         responses.push(data);
+            //         const galleryItem = document.createElement('div');
+            //         galleryItem.classList.add('gallery-item');
+            //         ansnDivPara.innerHTML = JSON.parse(data).Answer
+            //         scrollercontainer.scroll(0, scrollerDiv.scrollHeight);
+            //     })
+            //     .catch(error => {
+            //         scrolleriv.innerHTML = `<pre>Error: ${error.message}</pre>`;
+            //     });
+
+            data = {
+                Answer: "development environment to build custom apps for your business needs. Thanks for asking!"
+                , character_count: 17,
+                input: "what is power app",
+                timestamp: 1697180632.5429645
+            }
+            data1 = {
+                Answer: " Power Apps is a suite of apps, services, connectors,!"
+                , character_count: 17,
+                input: "what is power app",
+                timestamp: 1697180632.5429645
+            }
+            data2 = {
+                Answer: "r since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker inclu"
+                , character_count: 17,
+                input: "what is power app",
+                timestamp: 1697180632.5429645
+            }
+            data3 = {
+                Answer: " Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of  (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum comes from a line in section 1.10.32."
+                , character_count: 17,
+                input: "what is power app",
+                timestamp: 1697180632.5429645
+            }
+            data4 = {
+                Answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lor will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lor will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose"
+                , character_count: 17,
+                input: "what is power app",
+                timestamp: 1697180632.5429645
+            }
+
+            //let res = JSON.parse(data);
+            responses.push(data);
+            const galleryItem = document.createElement('div');
+            galleryItem.classList.add('gallery-item');
+            // ansnDivPara.innerHTML = data.Answer
+            if (question == "a") {
+                ansnDivPara.innerHTML = data.Answer
 
 
+            }
+            if (question == "b") {
+                ansnDivPara.innerHTML = data1.Answer
 
+            }
+            if (question == "c") {
+                ansnDivPara.innerHTML = data2.Answer
 
-                    let res = JSON.parse(data);
-                    responses.push(data);
-                    const galleryItem = document.createElement('div');
-                    galleryItem.classList.add('gallery-item');
+            }
+            if (question == "d") {
+                ansnDivPara.innerHTML = data3.Answer
 
-                    ansnDiv.innerHTML = JSON.parse(data).Answer
+            }
+            else {
+                ansnDivPara.innerHTML = data.Answer
 
-                    scrollercontainer.scroll(0, scrollerDiv.scrollHeight);
+            }
 
+           buttonDiv.onclick= copyFunction(ansnDivPara);
+          
 
-                })
-                .catch(error => {
-                    scrolleriv.innerHTML = `<pre>Error: ${error.message}</pre>`;
-                });
-
-            //scrollerDiv.scrollTop = scrollerDiv.scrollHeight;
+            scrollercontainer.scroll(0, scrollerDiv.scrollHeight);
         });
 
         // Monitor the input field for changes
         document.getElementById('question').addEventListener('input', updateButtonBackground);
 
+        function copyFunction(ansnDivPara) {
 
-
-        const showPopupButton = document.getElementById("showPopupButton");
-        const hidePopupButton = document.getElementById("hidePopupButton");
-        const popup = document.getElementById("popup");
-        const popup1 = document.getElementById("popup1")
-
-        showPopupButton.addEventListener("click", () => {
-            popup.style.display = "block";
-            popup1.style.display = "block";
-            console.log("Block");
-        });
-
-        hidePopupButton.addEventListener("click", () => {
-            popup.style.display = "none";
-            popup1.style.display = "none";
-
-            console.log("none");
-        });
-
-
-
-
-     // Add an event listener to the file input
-     const fileInput = document.getElementById("fileToUpload");
-
-
-     fileInput.onchange = () => {
-  const selectedFile = fileInput.files[0];
-
-//////////////////////////////////
-
-var reader = new FileReader();
-
-//reader.readAsText(this.files[0], 'UTF-8');
- reader.readAsDataURL(selectedFile);
-
-  reader.onloadend = (event) => {
-  var fileName = selectedFile.name;
-  // var content = btoa(evt.target.result as string);
-  var content = event.target.result;
-  var extension = fileName.split('.').pop();
-
-
-
-
-  var c = content.replace('data:text/plain;base64,', ''); // for text file
-  debugger
-  // debugger;
- // hit the api
-
- fileInput.addEventListener("change", function () {
-            // Fetch function to perform an HTTP request
-            // Replace the URL and request parameters with your specific use case
-            fetch("https://artesianchatbot.azurewebsites.net/UploadFile?filetype=docs", {
-                method: "POST",
-                body: c
-                //fileInput.files[0]
-                 // You can send the selected file here
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Upload response:", data);
-            })
-            .catch(error => {
-                console.error("Error uploading file:", error);
-            });
-        });
-
-
- 
-};
-reader.onerror = function (event) {
-  console.log('error');
-};
-
-/////////////////////////////////
-
-
-
-
-  
-
-  //var c = selectedFile.replace('data:text/plain;base64,', '');
-  //debugger
-  console.log(selectedFile);
-}
-   
-
+            const cb = navigator.clipboard;
+        cb.writeText(ansnDivPara.innerText).then(() => alert('Text copied'))
+            
+        }
 
 
     </script>

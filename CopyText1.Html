@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        /* Your CSS styles here */
+        /* ... (your existing CSS styles) ... */
+        .copy-button {
+            background-color: #19c37d;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fullscreen-div">
+        <!-- ... (your existing HTML content) ... -->
+    </div>
+
+    <script>
+        // ... (your existing JavaScript code) ...
+
+        // Function to copy the text content of an answer
+        function copyAnswerText(answerId) {
+            const answerText = document.getElementById(answerId).textContent;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = answerText;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+            alert('Answer copied to clipboard: ' + answerText);
+        }
+
+        // Function to create a copy button for a given answer
+        function createCopyButton(answerId) {
+            const copyButton = document.createElement('button');
+            copyButton.textContent = 'Copy';
+            copyButton.className = 'copy-button';
+            copyButton.onclick = function () {
+                copyAnswerText(answerId);
+            };
+            return copyButton;
+        }
+
+        // ... (your existing JavaScript code) ...
+
+        // Inside your code where you create the answer-div elements, add the copy button:
+
+        // Generate unique id for ans
+        var ansnDiv = document.createElement("div");
+        ansnDiv.id = "answer" + questionNumber;
+        ansnDiv.classList.add("answer-div");
+        ansnDiv.innerHTML = "loading...";
+
+        // Create and append the copy button
+        var copyButton = createCopyButton(ansnDiv.id);
+        ansnDiv.appendChild(copyButton);
+
+        // ... (rest of your code) ...
+    </script>
+</body>
+
+</html>
