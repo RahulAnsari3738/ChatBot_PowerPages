@@ -16,6 +16,8 @@
             border: 0 solid #ccc;
             padding: 10px;
             background-color: transparent;
+            /* height: 60%; */
+            /* overflow: hidden; */
         }
 
         /* Individual gallery items (responses) */
@@ -91,18 +93,22 @@
             text-align: justify;
             border-radius: 8px;
             padding: 20px;
+
         }
 
         .button-div {
 
             margin-top: 25px;
             max-height: 20px;
+            max-width: 25px;
+            min-height: 22px;
 
         }
 
         .answer-container-div {
             display: grid;
-            grid-template-columns: auto auto auto;
+            /* grid-template-columns: auto auto auto;  */
+            grid-template-columns: 20fr 1fr 1fr;
             background-color: #2C3C61;
             padding: 0px 15px 0px 0px;
             margin-top: 8px;
@@ -113,7 +119,8 @@
         #scroller-div {
             width: 98%;
             /* Set the width of the scrollable div */
-            height: 620px;
+            margin-top: 5%;
+            height: 70%;
             /* Set the height of the scrollable div */
             overflow: auto;
             /* Add scrollbars when content overflows the container */
@@ -281,108 +288,128 @@
 
 
 
-            // const url = `https://OrganizationalChatbot.azurewebsites.net/question?input=${encodeURIComponent(question)}&cid=${encodeURIComponent(generatedGuid)}`;
+            const url = `https://OrganizationalChatbot.azurewebsites.net/question?input=${encodeURIComponent(question)}&cid=${encodeURIComponent(generatedGuid)}`;
 
-            // // Create the fetch request with the options object
-            // fetch(url, {
-            //     method: 'GET',
-            //     headers: {
-            //         'Subscription-Key': 'Pdkv9VH9CkCVhm4GGxP5Lw==',
-            //         'Content-Type': 'application/json'
-            //     }
-            // })
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error(`HTTP error! Status: ${response.status}`);
-            //         }
-            //         return response.text();
-            //     })
-            //     .then(data => {
-            //         // Add the response to the list
-            //         let res = JSON.parse(data);
-            //         responses.push(data);
-            //         const galleryItem = document.createElement('div');
-            //         galleryItem.classList.add('gallery-item');
-            //         ansnDivPara.innerHTML = JSON.parse(data).Answer
-            //         scrollercontainer.scroll(0, scrollerDiv.scrollHeight);
-            //     })
-            //     .catch(error => {
-            //         scrolleriv.innerHTML = `<pre>Error: ${error.message}</pre>`;
-            //     });
+            // Create the fetch request with the options object
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Subscription-Key': 'Pdkv9VH9CkCVhm4GGxP5Lw==',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // Add the response to the list
+                    let res = JSON.parse(data);
+                    responses.push(data);
+                    const galleryItem = document.createElement('div');
+                    galleryItem.classList.add('gallery-item');
+                    ansnDivPara.innerHTML = JSON.parse(data).Answer
+                    buttonDiv.addEventListener("click", function () {
+                        copyFunction( JSON.parse(data).Answer);
+                    });
 
-            data = {
-                Answer: "development environment to build custom apps for your business needs. Thanks for asking!"
-                , character_count: 17,
-                input: "what is power app",
-                timestamp: 1697180632.5429645
-            }
-            data1 = {
-                Answer: " Power Apps is a suite of apps, services, connectors,!"
-                , character_count: 17,
-                input: "what is power app",
-                timestamp: 1697180632.5429645
-            }
-            data2 = {
-                Answer: "r since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker inclu"
-                , character_count: 17,
-                input: "what is power app",
-                timestamp: 1697180632.5429645
-            }
-            data3 = {
-                Answer: " Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of  (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum comes from a line in section 1.10.32."
-                , character_count: 17,
-                input: "what is power app",
-                timestamp: 1697180632.5429645
-            }
-            data4 = {
-                Answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lor will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lor will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose"
-                , character_count: 17,
-                input: "what is power app",
-                timestamp: 1697180632.5429645
-            }
+                    scrollercontainer.scroll(0, scrollerDiv.scrollHeight);
+                })
+                .catch(error => {
+                    scrolleriv.innerHTML = `<pre>Error: ${error.message}</pre>`;
+                });
+
+            // data = {
+            //     Answer: "development environment to build custom apps for your business needs. Thanks for asking!"
+            //     , character_count: 17,
+            //     input: "what is power app",
+            //     timestamp: 1697180632.5429645
+            // }
+            // data1 = {
+            //     Answer: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popula"
+            //     , character_count: 17,
+            //     input: "what is power app",
+            //     timestamp: 1697180632.5429645
+            // }
+            // data2 = {
+            //     Answer: "r since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker inclu"
+            //     , character_count: 17,
+            //     input: "what is power app",
+            //     timestamp: 1697180632.5429645
+            // }
+            // data3 = {
+            //     Answer: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popula"
+            //     , character_count: 17,
+            //     input: "what is power app",
+            //     timestamp: 1697180632.5429645
+            // }
+            // data4 = {
+            //     Answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lor will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lor will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose"
+            //     , character_count: 17,
+            //     input: "what is power app",
+            //     timestamp: 1697180632.5429645
+            // }
 
             //let res = JSON.parse(data);
-            responses.push(data);
-            const galleryItem = document.createElement('div');
-            galleryItem.classList.add('gallery-item');
+            // responses.push(data);
+            // const galleryItem = document.createElement('div');
+            // galleryItem.classList.add('gallery-item');
+            // var copyText="";
             // ansnDivPara.innerHTML = data.Answer
-            if (question == "a") {
-                ansnDivPara.innerHTML = data.Answer
+            // if (question == "a") {
+            //     ansnDivPara.innerHTML = data.Answer
+            //       copyText = data.Answer;
+
+            // }
+            // if (question == "b") {
+            //     ansnDivPara.innerHTML = data1.Answer
+            //     copyText = data1.Answer;
+            // }
+            // if (question == "c") {
+            //     ansnDivPara.innerHTML = data2.Answer
+            //     copyText = data2.Answer;
+            // }
+            // if (question == "d") {
+            //     ansnDivPara.innerHTML = data3.Answer
+            //     copyText = data3.Answer;
+
+            // }
+            // else {
+            //     ansnDivPara.innerHTML = data.Answer
+
+            // }
+
+            //    buttonDiv.onclick= copyFunction(ansnDivPara);
+            // buttonDiv.addEventListener("click", myFunction);
+            //         buttonDiv.addEventListener("click", function() {
+            //             copyFunction(copyText);
+            // });
 
 
-            }
-            if (question == "b") {
-                ansnDivPara.innerHTML = data1.Answer
-
-            }
-            if (question == "c") {
-                ansnDivPara.innerHTML = data2.Answer
-
-            }
-            if (question == "d") {
-                ansnDivPara.innerHTML = data3.Answer
-
-            }
-            else {
-                ansnDivPara.innerHTML = data.Answer
-
-            }
-
-           buttonDiv.onclick= copyFunction(ansnDivPara);
-          
-
-            scrollercontainer.scroll(0, scrollerDiv.scrollHeight);
+            //             scrollercontainer.scroll(0, scrollerDiv.scrollHeight);
         });
 
         // Monitor the input field for changes
         document.getElementById('question').addEventListener('input', updateButtonBackground);
 
-        function copyFunction(ansnDivPara) {
+        ///////////////////////////////////////////////////////////////////////////////////
 
+
+
+        function copyFunction(a) {
             const cb = navigator.clipboard;
-        cb.writeText(ansnDivPara.innerText).then(() => alert('Text copied'))
-            
+            cb.writeText(a).then()
+
+            //   document.getElementById("demo").innerHTML = a * b;
         }
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////
 
 
     </script>
