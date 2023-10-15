@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Your CSS styles here */
         #gallery-container {
@@ -102,6 +103,7 @@
             max-height: 20px;
             max-width: 25px;
             min-height: 22px;
+            display: none;
 
         }
 
@@ -259,11 +261,19 @@
             ansnDivPara.innerHTML = "loading..."
             ansnDivContainer.appendChild(ansnDivPara);
 
+            //Generate Icon 
+                
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-copy';
+            // icon.classList.add("button-div");
+
+            
 
             // Generate unique id for Button
             var buttonDiv = document.createElement("button");
             buttonDiv.id = "buttonDiv" + questionNumber;
             buttonDiv.classList.add("button-div");
+            buttonDiv.appendChild(icon)
             ansnDivContainer.appendChild(buttonDiv);
             // buttonDiv.onclick("")
 
@@ -311,6 +321,8 @@
                     const galleryItem = document.createElement('div');
                     galleryItem.classList.add('gallery-item');
                     ansnDivPara.innerHTML = JSON.parse(data).Answer
+ 
+                     buttonDiv.style.display="block"
                     buttonDiv.addEventListener("click", function () {
                         copyFunction( JSON.parse(data).Answer);
                     });
